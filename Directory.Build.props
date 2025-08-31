@@ -1,0 +1,45 @@
+﻿<Project>
+    <PropertyGroup>
+        <!-- Общие настройки для всех проектов -->
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Общие NuGet-пакеты для всех проектов -->
+        <PackageReference Include="MediatR" Version="12.0.0" />
+        <PackageReference Include="FluentValidation" Version="11.0.2" />
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="9.0.0.68202" PrivateAssets="all" />
+        <PackageReference Include="Roslynator.Analyzers" Version="4.3.0" PrivateAssets="all" />
+        <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.3.0" PrivateAssets="all" />
+        <PackageReference Include="Meziantou.Analyzer" Version="2.0.1" PrivateAssets="all" />
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'UnitTestsTask'">
+        <PackageReference Include="coverlet.collector" Version="6.0.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
+        <PackageReference Include="xunit" Version="2.9.3"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="3.1.3"/>
+        <PackageReference Include="FluentAssertions" Version="8.5.0" />
+    </ItemGroup>
+
+    <!-- Ссылки на проекты -->
+    <ItemGroup Condition="'$(MSBuildProjectName)' == 'UnitTestsTask'">
+        <ProjectReference Include="..\Task\Task.csproj" />
+    </ItemGroup>
+
+    <!-- InternalsVisibleTo для Task -->
+    <ItemGroup Condition="$(MSBuildProjectName) == 'Task'">
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>UnitTestsTask</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+</Project>
